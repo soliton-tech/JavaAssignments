@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package siteserver;
+
+option java_multiple_files = true;
+option java_package = "com.solitontech.siteserver.proto";
+
+service SiteService {
+	rpc UpdateSite(SiteInfo) returns (SiteInfo);
+	rpc BurnData(FilePath) returns (Result);
+	rpc ValidateData(FilePath) returns (Result);
+	rpc GetSite(Empty) returns (SiteInfo);
+}
+
+message SiteInfo {
+	int32 no_of_sites = 1;
+}
+
+message FilePath {
+	string file_path = 1;
+}
+
+message Result {
+	int32 elapsed_time_ms = 1;
+	repeated string failed_sites = 2;
+}
+
+message Empty{
+
+}

@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package instrumentserver;
+
+option java_multiple_files = true;
+option java_package = "com.solitontech.instrumentserver.proto";
+
+service InstrumentService {
+	rpc AddInstrument(AddInstrumentRequest) returns (Empty);
+	rpc InitializeInstrument(InitializeInstrumentRequest) returns (InitializeInstrumentResponse);
+	rpc ImportInstruments(FileName) returns (Empty);
+	rpc ExportInstruments(FileName) returns (Empty);
+}
+
+message AddInstrumentRequest {
+	InstrumentInfo instrument = 1;
+}
+
+message InitializeInstrumentRequest {
+	InstrumentType type = 1;
+	bool initialize_all = 2;
+	InitializeOrder initialize_Order = 3;
+}
+
+message InitializeInstrumentResponse {
+	repeated string initialized_instruments = 1;
+}
+
+message FileName {
+	string file_name = 1;
+}
+
+message Empty {
+
+}
+
+message InstrumentInfo {
+	InstrumentType type = 1;
+	string name = 2;
+}
+
+enum InstrumentType {
+	UNSPECIFIED_TYPE = 0;
+	DCVI = 1;
+	DIGITAL = 2;
+	HYBRID = 3;
+}
+
+enum InitializeOrder {
+	UNSPECIFIED_ORDER = 0;
+	SEQUENCE = 1;
+	PARALLEL = 2;
+}
